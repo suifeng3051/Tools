@@ -17,40 +17,28 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package com.tf56.toneapi.common;
+package com.tf56.restclient;
 
-import org.apache.http.Header;
+import com.tf56.restclient.common.RestClient;
+import org.apache.http.HttpRequest;
 
-/**
- * An exception for  REST errors.
- */
-public class RestException extends Exception {
+public interface ICredentials {
 
-    private int status;
-    private String result;
-    private Header[] headers;
+    void initialize(RestClient client) ;
+    /**
+     * Sets the Authorization header for the given request.
+     *
+     * @param req HTTP request to authenticate
+     */
+    void authenticate(HttpRequest req);
 
-    public RestException(String msg, int status, String result, Header[] headers) {
-        super(msg);
+    /**
+     * Gets the logon name representing these credentials.
+     *
+     * @return logon name as a string
+     */
+    String getLogonName();
 
-        this.status = status;
-        this.result = result;
-        this.headers = headers;
-    }
-
-    public int getHttpStatusCode() {
-        return status;
-    }
-
-    public String getHttpResult() {
-        return result;
-    }
-
-    public Header[] getHeaders() {
-        return headers;
-    }
-
-    public String getMessage() {
-        return String.format("%s %s: %s", Integer.toString(status), super.getMessage(), result);
-    }
+    void logout(RestClient client) ;
 }
+

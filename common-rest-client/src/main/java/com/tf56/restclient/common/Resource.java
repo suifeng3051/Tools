@@ -1,4 +1,4 @@
-package com.tf56.toneapi.common;
+package com.tf56.restclient.common;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

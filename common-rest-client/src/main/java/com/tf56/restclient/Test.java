@@ -1,6 +1,6 @@
-package com.tf56.toneapi;
+package com.tf56.restclient;
 
-import com.tf56.toneapi.common.Application;
+import com.tf56.restclient.common.Application;
 
 import java.util.List;
 

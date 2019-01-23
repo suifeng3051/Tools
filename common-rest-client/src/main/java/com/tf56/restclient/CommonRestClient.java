@@ -1,7 +1,7 @@
-package com.tf56.toneapi;
+package com.tf56.restclient;
 
-import com.tf56.toneapi.common.RestClient;
-import com.tf56.toneapi.common.Application;
+import com.tf56.restclient.common.RestClient;
+import com.tf56.restclient.common.Application;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
