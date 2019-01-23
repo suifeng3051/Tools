@@ -1,7 +1,7 @@
 package com.tf56.toneapi;
 
 import com.tf56.toneapi.common.RestClient;
-import com.tf56.toneapi.common.ToneApplication;
+import com.tf56.toneapi.common.Application;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
@@ -14,40 +14,40 @@ import java.util.List;
  * @Date 2019/1/4
  * @Description
  */
-public class ToneClient {
-    public static final String TONE_ADDRESS="http://tone.tf56.lo";
+public class CommonRestClient {
+    public static final String REST_SERVER_ADDRESS="http://myserver.com";
     //配置项
     //@Value("${tone.host}")
-    public static ToneClient toneClient;
+    public static CommonRestClient toneClient;
     public RestClient restClient;
-    public static ToneClient getInstance(String toneAddress){
+    public static CommonRestClient getInstance(String restServerAddress){
         if(toneClient==null){
-            toneClient=new ToneClient();
+            toneClient=new CommonRestClient();
             PoolingClientConnectionManager connManager = new PoolingClientConnectionManager();
             connManager.setDefaultMaxPerRoute(20);
             connManager.setMaxTotal(40);
             HttpClient httpClient = new DefaultHttpClient(connManager);
-            if(toneAddress==null){
-                toneAddress=TONE_ADDRESS;
+            if(restServerAddress==null){
+                restServerAddress=REST_SERVER_ADDRESS;
             }
-            RestClient restClient = new RestClient(httpClient, null, URI.create(toneAddress));
+            RestClient restClient = new RestClient(httpClient, null, URI.create(restServerAddress));
             toneClient.setRestClient(restClient);
             return toneClient;
         }
        return toneClient;
     }
 
-    public  ToneApplication getByAppId(String appId)  {
-        return ToneApplication.getByAppId(restClient,appId);
+    public Application getByAppId(String appId)  {
+        return Application.getByAppId(restClient,appId);
     }
-    public  ToneApplication getByAppName(String appName)  {
-        return ToneApplication.getByAppName(restClient,appName);
+    public Application getByAppName(String appName)  {
+        return Application.getByAppName(restClient,appName);
     }
-    public  List<ToneApplication> getOwnedAppList(String ownerInfo)  {
-        return ToneApplication.getOwnedAppList(restClient,ownerInfo);
+    public  List<Application> getOwnedAppList(String ownerInfo)  {
+        return Application.getOwnedAppList(restClient,ownerInfo);
     }
-    public  List<ToneApplication> getRelatedAppList(String userInfo)  {
-        return ToneApplication.getRelatedAppList(restClient,userInfo);
+    public  List<Application> getRelatedAppList(String userInfo)  {
+        return Application.getRelatedAppList(restClient,userInfo);
     }
 
     public RestClient getRestClient() {

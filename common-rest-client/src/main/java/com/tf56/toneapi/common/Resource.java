@@ -13,17 +13,27 @@ import java.util.Map;
  * @Description
  */
 public abstract class Resource {
-    public static final String RESOURCE_URI = "/tone/open/";
-    public static final String MAX_RESULTS = "maxResults";
-
-    public static final int defaultMaxResults = Integer.MAX_VALUE;
 
     protected static <T extends Resource> List<T> getResourceArray(Class<T> type, Object r) {
-
         return JSON.parseArray(parseData(r), type);
-
     }
 
+    /**
+     * 从restful接口返回结果中解析出data对象
+     *
+     * 一般restful接口都会自定义一套标准返回结果格式，如：
+     * code :返回结果编码
+     * msg :返回结果消息
+     * data :返回结果对象
+     * {
+     "code": 0,
+     "data": {
+        "dataId": "1",
+        "dataName": "myResult"
+        },
+     "msg": "success"
+     }
+     * */
     public static String parseData(Object r) {
         if (r == null) {
             throw new RuntimeException("接口返回数据为null!");
@@ -40,20 +50,26 @@ public abstract class Resource {
                 return null;
             }
         } else {
-            throw new RuntimeException("tone接口返回错误!"+jsonObject.toString());
+            throw new RuntimeException("restful接口返回错误!"+jsonObject.toString());
         }
 
     }
 
+    /**
+     * 将rest接口返回的data解析成自定义对象方法
+     * @param type 自定义对象类型
+     * @param r data 对象
+     * @return 自定义对象
+     */
     protected static <T extends Resource> T getResource(Class<T> type, Object r) {
         return JSON.parseObject(parseData(r), type);
     }
 
     /**
-     * Retrieves all boards visible to the session user.
+     * 调用restful接口，并将其解析成自定义结果对象列表
      *
      * @param restclient REST client instance
-     * @return a list of boards
+     * @return a list of Object
      */
     static <T extends Resource> List<T> list(RestClient restclient, Class<T> type, String url, Map<String, String> params) {
 
@@ -71,10 +87,10 @@ public abstract class Resource {
     }
 
     /**
-     * Retrieves all boards visible to the session user.
+     * 调用restful接口，并将其解析成自定义结果对象
      *
      * @param restclient REST client instance
-     * @return a list of boards
+     * @return a list of Object
      */
     static <T extends Resource> T get(RestClient restclient, Class<T> type, String url, Map<String, String> params) {
 
@@ -92,13 +108,13 @@ public abstract class Resource {
     }
 
     /**
-     * set maxResult attr default value
+     * 设置默认接口返回结果数量
      *
      * @return a list of defaultParams
      */
     private static Map<String, String> getDefaultParams() {
         Map<String, String> defaultParams = new HashMap<String, String>();
-        defaultParams.put(MAX_RESULTS, String.valueOf(defaultMaxResults));
+        defaultParams.put(Constant.MAX_RESULTS, String.valueOf(Constant.DEFAULT_MAX_RESULT));
         return defaultParams;
     }
 }

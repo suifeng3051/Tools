@@ -1,6 +1,6 @@
 package com.tf56.toneapi;
 
-import com.tf56.toneapi.common.ToneApplication;
+import com.tf56.toneapi.common.Application;
 
 import java.util.List;
 
@@ -11,14 +11,14 @@ import java.util.List;
  */
 public class Test {
     public static void main(String[] args) {
-        String toneAddress="http://tone.tf56.lo";
-        ToneApplication toneApplication=ToneClient.getInstance(toneAddress).getByAppId("36895");
+        String restServerAddress="http://myserver.com";
+        Application toneApplication= CommonRestClient.getInstance(restServerAddress).getByAppId("1");
         System.out.println(toneApplication);
-        ToneApplication toneApplication2=ToneClient.getInstance(toneAddress).getByAppName("opensso");
+        Application toneApplication2= CommonRestClient.getInstance(restServerAddress).getByAppName("myapp");
         System.out.println(toneApplication2);
-        List<ToneApplication> list1=ToneClient.getInstance(toneAddress).getOwnedAppList("王厚达/16538");
+        List<Application> list1= CommonRestClient.getInstance(restServerAddress).getOwnedAppList("wanghouda");
         System.out.println(list1);
-        List<ToneApplication> list2=ToneClient.getInstance(toneAddress).getRelatedAppList("王厚达/16538");
+        List<Application> list2= CommonRestClient.getInstance(restServerAddress).getRelatedAppList("wanghouda");
         System.out.println(list2);
 
     }
